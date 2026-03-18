@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CNC Job Profit Tracker</title>
+<style>
+body {
+  font-family: Arial;
+  background: #f3f4f6;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+h1 {
+  text-align: center;
+}
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+}
+.result {
+  margin-top: 15px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>CNC Job Profit Tracker</h1>
+
+<h3>Estimated</h3>
+<label>Estimated Hours</label>
+<input id="estHours" type="number">
+
+<label>Estimated Rate ($/hr)</label>
+<input id="estRate" type="number">
+
+<h3>Actual</h3>
+<label>Actual Hours</label>
+<input id="actHours" type="number">
+
+<label>Actual Rate ($/hr)</label>
+<input id="actRate" type="number">
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="output" style="margin-top:20px; font-size:18px;"></div>
+</div>
+
+<script>
+function calculate() {
+  let estHours = document.getElementById("estHours").value;
+  let estRate = document.getElementById("estRate").value;
+  let actHours = document.getElementById("actHours").value;
+  let actRate = document.getElementById("actRate").value;
+
+  let estCost = estHours * estRate;
+  let actCost = actHours * actRate;
+
+  let profit = estCost - actCost;
+  let margin = (profit / estCost) * 100;
+
+  let color = profit >= 0 ? "green" : "red";
+  let status = profit >= 0 ? "PROFITABLE ✅" : "LOSS ❌";
+
+  document.getElementById("output").innerHTML =
+    "<span style='color:" + color + "'>" + status + "</span><br><br>" +
+    "Estimated Cost: $" + estCost.toFixed(2) + "<br>" +
+    "Actual Cost: $" + actCost.toFixed(2) + "<br>" +
+    "Profit: $" + profit.toFixed(2) + "<br>" +
+    "Margin: " + margin.toFixed(2) + "%";
+}
+</script>
+
+</body>
+</html>
